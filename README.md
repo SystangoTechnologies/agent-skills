@@ -24,7 +24,6 @@ Skills encode the workflows, quality gates, and best practices that senior engin
 | Define what to build | `/spec` | Spec before code |
 | Plan how to build it | `/plan` | Small, atomic tasks |
 | Build incrementally | `/build` | One slice at a time |
-| Prove it works | `/test` | Tests are proof |
 | Review before merge | `/review` | Improve code health |
 | Simplify the code | `/code-simplify` | Clarity over cleverness |
 | Ship to production | `/ship` | Faster is safer |
@@ -41,7 +40,7 @@ Skills also activate automatically based on what you're doing — designing an A
 **Marketplace install:**
 
 ```
-/plugin marketplace add addyosmani/agent-skills
+/plugin marketplace add SystangoTechnologies/agent-skills
 /plugin install agent-skills@addy-agent-skills
 ```
 
@@ -53,7 +52,7 @@ Skills also activate automatically based on what you're doing — designing an A
 **Local / development:**
 
 ```bash
-git clone https://github.com/addyosmani/agent-skills.git
+git clone https://github.com/SystangoTechnologies/agent-skills.git
 claude --plugin-dir /path/to/agent-skills
 ```
 

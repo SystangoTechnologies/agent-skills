@@ -21,7 +21,7 @@ OpenCode uses a **skill-driven execution model** powered by the `skill` tool and
 
 The agent should automatically map user intent to skills:
 
-- Feature / new functionality → `spec-driven-development`, then `incremental-implementation`, `test-driven-development`
+- Feature / new functionality → `spec-driven-development`, then `incremental-implementation`
 - Planning / breakdown → `planning-and-task-breakdown`
 - Bug / failure / unexpected behavior → `debugging-and-error-recovery`
 - Code review → `code-review-and-quality`
@@ -37,10 +37,9 @@ Instead, the agent must internally follow this lifecycle:
 
 - DEFINE → `spec-driven-development`
 - PLAN → `planning-and-task-breakdown`
-- BUILD → `incremental-implementation` + `test-driven-development`
+- BUILD → `incremental-implementation`
 - VERIFY → `debugging-and-error-recovery`
 - REVIEW → `code-review-and-quality`
-- SHIP → `shipping-and-launch`
 
 ### Execution Model
 
@@ -108,6 +107,7 @@ bash /mnt/skills/user/{skill-name}/scripts/{script}.sh [args]
 ```
 
 **Arguments:**
+
 - `arg1` - Description (defaults to X)
 
 **Examples:**
@@ -124,6 +124,7 @@ bash /mnt/skills/user/{skill-name}/scripts/{script}.sh [args]
 ## Troubleshooting
 
 {Common issues and solutions, especially network/permissions errors}
+
 ```
 
 ### Best Practices for Context Efficiency
@@ -159,6 +160,7 @@ zip -r {skill-name}.zip {skill-name}/
 Document these two installation methods for users:
 
 **Claude Code:**
+
 ```bash
 cp -r skills/{skill-name} ~/.claude/skills/
 ```
