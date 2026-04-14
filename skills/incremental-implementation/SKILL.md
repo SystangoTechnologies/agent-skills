@@ -78,9 +78,12 @@ If a task is only partially implemented when a session ends, do NOT mark it `[x]
 
 Stop and run the `planning-and-task-breakdown` skill first to generate it.
 
-### Skipping Test Commands in Tasks
+### Skipping Test Commands and Unit Tests Sections
 
-If a task's Verification block includes `npm test` commands, skip those — test execution is deferred to a separate testing skill. Only run `npm run build` and `npx tsc --noEmit` as verification.
+When reading a task, two things must be skipped — both are reserved for the `/test` phase:
+
+1. **npm test commands** in the Verification block — if a task's Verification block includes `npm test` commands, skip those. Only run `npm run build` and `npx tsc --noEmit` as verification.
+2. **Unit Tests (deferred) section** — every task includes a `**Unit Tests (deferred):**` block with a `- [ ] Tests written` checkbox and notes on what to test. Do NOT write those tests during the build phase. Do not create test files. Do not write test code. Do not check the `Tests written` checkbox. Treat the entire section as read-only context for the future `/test` phase.
 
 ## Domain Skill Routing
 
@@ -297,7 +300,7 @@ If a session ends before all tasks are complete, commit the completed tasks at t
 | "These changes are too small to commit separately" | Small commits are free. Large commits hide bugs and make rollbacks painful. |
 | "I'll add the feature flag later" | If the feature isn't complete, it shouldn't be user-visible. Add the flag now. |
 | "This refactor is small enough to include" | Refactors mixed with features make both harder to review and debug. Separate them. |
-| "I'll write tests for this later" | No tests per increment is intentional — a separate testing skill handles this. Don't add tests anyway. |
+| "I'll write tests for this later" | Correct — and intentional. The task's **Unit Tests (deferred)** section already captures what to test. Run `/test` after the build phase. Do not write tests now, even if the section makes it tempting. |
 | "I should commit this before moving on" | Mark the todo checkbox instead. Commit once at the end. The checkbox is durable across compaction. |
 
 ## Red Flags
@@ -313,6 +316,8 @@ If a session ends before all tasks are complete, commit the completed tasks at t
 - Committing after each task instead of once at the end
 - Starting implementation without loading the relevant domain skill first
 - Todo.md not updated immediately after each completed task
+- Creating test files or writing test code during the build phase (reserved for the `/test` phase)
+- Checking the `Tests written` checkbox in a task's Unit Tests section (only the `/test` phase does this)
 
 ## Verification
 

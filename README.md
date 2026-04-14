@@ -5,12 +5,12 @@
 Skills encode the workflows, quality gates, and best practices that senior engineers use when building software. These ones are packaged so AI agents follow them consistently across every phase of development.
 
 ```
-  DEFINE          PLAN           BUILD          VERIFY         REVIEW          SHIP
+  DEFINE         PLAN          BUILD        VERIFY        REVIEW         SHIP
  ┌──────┐      ┌──────┐      ┌──────┐      ┌──────┐      ┌──────┐      ┌──────┐
  │ Idea │ ───▶ │ Spec │ ───▶ │ Code │ ───▶ │ Test │ ───▶ │  QA  │ ───▶ │  Go  │
  │Refine│      │  PRD │      │ Impl │      │Debug │      │ Gate │      │ Live │
  └──────┘      └──────┘      └──────┘      └──────┘      └──────┘      └──────┘
-  /spec          /plan          /build        /test         /review       /ship
+  /spec         /plan         /build        /test         /review       /ship
 ```
 
 ---
@@ -21,12 +21,13 @@ Skills encode the workflows, quality gates, and best practices that senior engin
 
 | What you're doing | Command | Key principle |
 |-------------------|---------|---------------|
-| Define what to build | `/spec` | Spec before code |
-| Plan how to build it | `/plan` | Small, atomic tasks |
-| Build incrementally | `/build` | One slice at a time |
-| Review before merge | `/review` | Improve code health |
-| Simplify the code | `/code-simplify` | Clarity over cleverness |
-| Ship to production | `/ship` | Faster is safer |
+| Define what to build  | `/spec`          | Spec before code |
+| Plan how to build it  | `/plan`          | Small, atomic tasks |
+| Build incrementally   | `/build`         | One slice at a time |
+| Prove it works        | `/test`          | Tests are proof |
+| Review before merge   | `/review`        | Improve code health |
+| Simplify the code     | `/code-simplify` | Clarity over cleverness |
+| Ship to production    | `/ship`          | Faster is safer |
 
 Skills also activate automatically based on what you're doing — designing an API triggers `api-and-interface-design`, building UI triggers `frontend-ui-engineering`, and so on.
 
@@ -73,7 +74,7 @@ Install as native skills for auto-discovery, or add to `GEMINI.md` for persisten
 **Install from the repo:**
 
 ```bash
-gemini skills install https://github.com/addyosmani/agent-skills.git --path skills
+gemini skills install https://github.com/SystangoTechnologies/agent-skills.git --path skills
 ```
 
 **Install from a local clone:**
@@ -239,7 +240,7 @@ Every skill follows a consistent anatomy:
 
 ```
 agent-skills/
-├── skills/                            # 20 core skills (SKILL.md per directory)
+├── skills/                            #   Core skills (SKILL.md per directory)
 │   ├── idea-refine/                   #   Define
 │   ├── spec-driven-development/       #   Define
 │   ├── planning-and-task-breakdown/   #   Plan
@@ -247,12 +248,12 @@ agent-skills/
 │   ├── context-engineering/           #   Build
 │   ├── source-driven-development/     #   Build
 │   ├── frontend-ui-engineering/       #   Build
-│   ├── test-driven-development/       #   Build
+│   ├── generate-unit-tests/           #   Build
 │   ├── api-and-interface-design/      #   Build
 │   ├── browser-testing-with-devtools/ #   Verify
 │   ├── debugging-and-error-recovery/  #   Verify
 │   ├── code-review-and-quality/       #   Review
-│   ├── code-simplification/          #   Review
+│   ├── code-simplification/           #   Review
 │   ├── security-and-hardening/        #   Review
 │   ├── performance-optimization/      #   Review
 │   ├── git-workflow-and-versioning/   #   Ship

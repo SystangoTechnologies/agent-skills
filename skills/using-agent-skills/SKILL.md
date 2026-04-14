@@ -24,6 +24,7 @@ Task arrives
     │   ├── API work? ────────────────→ api-and-interface-design
     │   ├── Need better context? ─────→ context-engineering
     │   └── Need doc-verified code? ───→ source-driven-development
+    ├── Writing/running tests? ────────→ generate-unit-tests
     ├── Something broke? ──────────────→ debugging-and-error-recovery
     ├── Reviewing code? ───────────────→ code-review-and-quality
     │   ├── Security concerns? ───────→ security-and-hardening
@@ -121,7 +122,7 @@ These are the subtle errors that look like productivity but create problems:
 
 2. **Skills are workflows, not suggestions.** Follow the steps in order. Don't skip verification steps.
 
-3. **Multiple skills can apply.** A feature implementation might involve `spec-driven-development` → `planning-and-task-breakdown` → `incremental-implementation` → `code-review-and-quality` in sequence.
+3. **Multiple skills can apply.** A feature implementation might involve `spec-driven-development` → `planning-and-task-breakdown` → `incremental-implementation` → `generate-unit-tests`→ `code-review-and-quality`→ `shipping-and-launch` in sequence.
 
 4. **When in doubt, start normally.** If the task is non-trivial and there's no spec, continue normally, DON'T apply spec-driven-development skill. Also, if user wants to avoid applying spec-driven then let him continue in normal fashion. We don't want to use skills all the time.
 
@@ -135,8 +136,10 @@ For a complete feature, the typical skill sequence is:
 3. context-engineering         → Load the right context
 4. source-driven-development   → Verify against official docs
 5. incremental-implementation  → Build slice by slice
-6. code-review-and-quality     → Review before merge
-7. documentation-and-adrs     → Document decisions
+6. generate-unit-tests         → Prove each slice works with unit test cases
+7. code-review-and-quality     → Review before merge
+8. documentation-and-adrs      → Document decisions
+9. shipping-and-launch         → Deploy safely
 ```
 
 Not every task needs every skill. A bug fix might only need: `debugging-and-error-recovery` → `code-review-and-quality`.
@@ -151,9 +154,10 @@ Not every task needs every skill. A bug fix might only need: `debugging-and-erro
 | Build | context-engineering | Right context at the right time |
 | Build | frontend-ui-engineering | Production-quality UI with accessibility |
 | Build | api-and-interface-design | Stable interfaces with clear contracts |
-| Verify | browser-testing-with-devtools | Chrome DevTools MCP for runtime verification |
+| Verify | generate-unit-tests | Create unit tests |
 | Verify | debugging-and-error-recovery | Reproduce → localize → fix → guard |
 | Review | code-review-and-quality | Five-axis review with quality gates |
 | Review | security-and-hardening | OWASP prevention, input validation, least privilege |
 | Review | performance-optimization | Measure first, optimize only what matters |
 | Ship | documentation-and-adrs | Document the why, not just the what |
+| Ship | shipping-and-launch | Pre-launch checklist, monitoring, rollback plan |

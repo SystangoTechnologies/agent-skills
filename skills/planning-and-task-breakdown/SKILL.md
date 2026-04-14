@@ -89,19 +89,27 @@ Each task follows this structure:
 - [ ] [Specific, testable condition]
 - [ ] [Specific, testable condition]
 
+**Unit Tests (deferred):**
+- [ ] Tests written
+- Functions/behaviors to cover: [e.g. createTask, validateInput]
+- Edge cases: [e.g. empty title, duplicate ID, missing required field]
+- Test type: [unit | integration | component | end-to-end]
+- Suggested file: `tests/path/to/feature.test.ts`
+
 **Verification:**
-- [ ] Tests pass: `npm test -- --grep "feature-name"`
 - [ ] Build succeeds: `npm run build`
+- [ ] Type checking passes: `npx tsc --noEmit`
 - [ ] Manual check: [description of what to verify]
 
 **Dependencies:** [Task numbers this depends on, or "None"]
 
 **Files likely touched:**
 - `src/path/to/file.ts`
-- `tests/path/to/test.ts`
 
 **Estimated scope:** [Small: 1-2 files | Medium: 3-5 files | Large: 5+ files]
 ```
+
+The **Unit Tests (deferred)** section is required for every task. During planning, describe what to test: which functions/behaviors to cover, edge cases, test type, and where the test file should live. The `- [ ] Tests written` checkbox starts unchecked — the `/test` phase checks it after writing tests. The build phase skips this section entirely and does not create test files.
 
 ### Step 5: Order and Checkpoint
 
@@ -207,6 +215,7 @@ When multiple agents or sessions are available:
 - Starting implementation without a written task list
 - Tasks that say "implement the feature" without acceptance criteria
 - No verification steps in the plan
+- Unit Tests (deferred) section missing from a task (every task needs test notes, even if deferred)
 - All tasks are XL-sized
 - No checkpoints between tasks
 - Dependency order isn't considered
@@ -217,6 +226,7 @@ Before starting implementation, confirm:
 
 - [ ] Every task has acceptance criteria
 - [ ] Every task has a verification step
+- [ ] Every task has a Unit Tests (deferred) section with at least one behavior listed
 - [ ] Task dependencies are identified and ordered correctly
 - [ ] No task touches more than ~5 files
 - [ ] Checkpoints exist between major phases
