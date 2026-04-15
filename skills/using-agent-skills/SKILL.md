@@ -126,6 +126,18 @@ These are the subtle errors that look like productivity but create problems:
 
 4. **When in doubt, start normally.** If the task is non-trivial and there's no spec, continue normally, DON'T apply spec-driven-development skill. Also, if user wants to avoid applying spec-driven then let him continue in normal fashion. We don't want to use skills all the time.
 
+## Phase Transition Rules
+
+When transitioning between phases, verify the exit criteria of the previous phase before proceeding:
+
+| Transition | Verify before proceeding |
+|---|---|
+| **Plan → Build** | Every task has a `Unit Tests (deferred)` section. No task deliverable is a test file. No gate requires test execution (`npm test`). |
+| **Build → Test** | All build tasks marked `[x]` in `specs/tasks/todo.md`. No test files created during build. Full build succeeds. |
+| **Test → Review** | All `- [x] Tests written` checkboxes checked in deferred sections. `npm test` passes. No source files modified during test phase. |
+
+**Anti-pattern:** Collapsing build and test into a single phase. Even for small projects, the separation prevents coupling test structure to implementation details. Tests written after implementation reveal which behaviors matter most — tests written during implementation often couple to implementation choices rather than requirements.
+
 ## Lifecycle Sequence
 
 For a complete feature, the typical skill sequence is:
