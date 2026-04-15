@@ -55,7 +55,7 @@ git log --oneline
 a1b2c3d Add task creation endpoint with validation
 d4e5f6g Add task creation form component
 h7i8j9k Connect form to API and add loading state
-m1n2o3p Add task creation tests (unit + integration)
+m1n2o3p Add task creation tests (unit)
 
 # Bad: Everything mixed together
 git log --oneline

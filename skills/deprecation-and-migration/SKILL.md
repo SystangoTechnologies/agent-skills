@@ -98,7 +98,7 @@ Migrate consumers one at a time, not all at once. For each consumer:
 ```
 1. Identify all touchpoints with the deprecated system
 2. Update to use the replacement
-3. Verify behavior matches (tests, integration checks)
+3. Verify behavior matches (tests, runtime checks)
 4. Remove references to the old system
 5. Confirm no regressions
 ```

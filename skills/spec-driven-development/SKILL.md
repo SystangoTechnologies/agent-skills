@@ -65,7 +65,7 @@ Don't silently fill in ambiguous requirements. The spec's entire purpose is to s
    src/           → Application source code
    src/components → React components
    src/lib        → Shared utilities
-   tests/         → Unit and integration tests
+   tests/         → Unit tests
    e2e/           → End-to-end tests
    docs/          → Documentation
    ```

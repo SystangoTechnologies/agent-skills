@@ -93,7 +93,7 @@ Each task follows this structure:
 - [ ] Tests written
 - Functions/behaviors to cover: [e.g. createTask, validateInput]
 - Edge cases: [e.g. empty title, duplicate ID, missing required field]
-- Test type: [unit | integration | component | end-to-end]
+- Test type: [unit | component | end-to-end]
 - Suggested file: `tests/path/to/feature.test.ts`
 
 **Verification:**
@@ -107,11 +107,36 @@ Each task follows this structure:
 - `src/path/to/file.ts`
 
 **Estimated scope:** [Small: 1-2 files | Medium: 3-5 files | Large: 5+ files]
+
+**Domain skill:** [`api-and-interface-design` | `frontend-ui-engineering` | `security-and-hardening` | None]
 ```
 
-The **Unit Tests (deferred)** section is required for every task. During planning, describe what to test: which functions/behaviors to cover, edge cases, test type, and where the test file should live. The `- [ ] Tests written` checkbox starts unchecked — the `/test` phase checks it after writing tests. The build phase skips this section entirely and does not create test files.
+**Field-by-field rules:**
 
-### Step 5: Order and Checkpoint
+- **Acceptance criteria** — every item must use checkbox syntax (`- [ ]`), not plain bullets (`- `). Plain bullets are not trackable.
+- **Unit Tests (deferred)** — required for every task. The `- [ ] Tests written` line must use checkbox syntax (`- [ ]`), not a plain bullet. This checkbox is the contract between the planning and testing phases — the `/test` phase checks it after writing tests. The build phase skips this section entirely and does not create test files.
+- **Verification** — every item must use checkbox syntax (`- [ ]`), not plain bullets. Build-phase gates verify compilation and runtime only — never `npm test`, `pnpm test`, or coverage thresholds.
+- **Domain skill** — required for every task. The planner knows the task's domain when writing it. Embed the classification so the builder doesn't have to re-derive it. Use `None` for pure infrastructure tasks (build config, utility functions, migrations with no auth surface). Tasks involving REST endpoints, HTTP status codes, request/response contracts, or middleware must specify `api-and-interface-design`. Tasks involving UI components, layouts, or state must specify `frontend-ui-engineering`. Tasks involving auth, validation, PII, or sessions must specify `security-and-hardening`. A task may list more than one skill if it spans domains.
+
+### Step 5: Validate Task List Structure
+
+Before advancing to the build phase, run this checklist against every task in the list. If any item fails, fix the task before proceeding — do not defer fixes to the build phase.
+
+**Phase separation:**
+- [ ] Every task has a `Unit Tests (deferred)` section with `- [ ] Tests written` using checkbox syntax (`- [ ]`), not a plain bullet (`- `)
+- [ ] No task's primary deliverable is a test file — test files are created in the `/test` phase, not as build tasks. This includes tasks titled "Test Suite", "Write Tests", etc. — if its purpose is producing test files, it should not exist as a task
+- [ ] No task description mentions creating test files, placeholder tests, or dummy test files during the build phase
+- [ ] No gate or verification step requires `npm test`, `pnpm test`, `--listTests`, or coverage thresholds — build gates verify compilation and runtime only
+
+**Template compliance:**
+- [ ] Every acceptance criterion uses checkbox format (`- [ ]`), not plain bullets (`- `)
+- [ ] Every verification step uses checkbox format (`- [ ]`), not plain bullets (`- `)
+- [ ] Every task that involves API, UI, or security work has a `**Domain skill:**` field identifying which skill to load before implementation. Tasks with REST endpoints, HTTP status codes, request/response contracts, or middleware must specify `api-and-interface-design`. Pure infrastructure tasks use `None`
+
+**File location:**
+- [ ] Task list is saved to `specs/tasks/todo.md`
+
+### Step 6: Order and Checkpoint
 
 Arrange tasks so that:
 
@@ -209,6 +234,7 @@ When multiple agents or sessions are available:
 | "The tasks are obvious" | Write them down anyway. Explicit tasks surface hidden dependencies and forgotten edge cases. |
 | "Planning is overhead" | Planning is the task. Implementation without a plan is just typing. |
 | "I can hold it all in my head" | Context windows are finite. Written plans survive session boundaries and compaction. |
+| "I'll make the tests a separate task" | Tests belong in the `/test` phase. Each task's `Unit Tests (deferred)` section captures what to test. Creating a test task defeats phase separation and forces tests to be written during build. Don't do this. |
 
 ## Red Flags
 
@@ -216,6 +242,12 @@ When multiple agents or sessions are available:
 - Tasks that say "implement the feature" without acceptance criteria
 - No verification steps in the plan
 - Unit Tests (deferred) section missing from a task (every task needs test notes, even if deferred)
+- `Tests written` line using a plain bullet (`- Tests written`) instead of checkbox syntax (`- [ ] Tests written`) — the checkbox is the contract between planning and testing phases
+- Acceptance criteria or verification steps using plain bullets instead of checkbox syntax — plain bullets are not trackable
+- Task whose primary deliverable is a test file — tests are a phase, not a task. Document them in `Unit Tests (deferred)`, don't build them as tasks
+- Task description mentioning "create test files", "placeholder tests", or "dummy test files" — no test files are created during build
+- Gate or verification step that requires `npm test`, `pnpm test`, `--listTests`, or coverage thresholds — build gates verify compilation and runtime, not test coverage
+- API/UI/security task missing a `Domain skill` field — the planner knows the domain; don't make the builder guess
 - All tasks are XL-sized
 - No checkpoints between tasks
 - Dependency order isn't considered
@@ -224,9 +256,12 @@ When multiple agents or sessions are available:
 
 Before starting implementation, confirm:
 
-- [ ] Every task has acceptance criteria
-- [ ] Every task has a verification step
-- [ ] Every task has a Unit Tests (deferred) section with at least one behavior listed
+- [ ] Every task has acceptance criteria using checkbox syntax (`- [ ]`)
+- [ ] Every task has verification steps using checkbox syntax (`- [ ]`)
+- [ ] Every task has a Unit Tests (deferred) section with `- [ ] Tests written` (checkbox, not plain bullet) and at least one behavior listed
+- [ ] Every task has a `**Domain skill:**` field (`api-and-interface-design`, `frontend-ui-engineering`, `security-and-hardening`, or `None`)
+- [ ] No task's primary deliverable is a test file
+- [ ] No gate requires `npm test`, `pnpm test`, or coverage thresholds
 - [ ] Task dependencies are identified and ordered correctly
 - [ ] No task touches more than ~5 files
 - [ ] Checkpoints exist between major phases

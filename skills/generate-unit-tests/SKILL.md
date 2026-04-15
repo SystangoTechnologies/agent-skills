@@ -39,6 +39,16 @@ Read the deferred test notes written during planning, analyze the corresponding 
 
 ## The Testing Process
 
+### Pre-Condition: Verify Build Phase is Complete
+
+Before writing any tests, check:
+
+- [ ] All build tasks in `specs/tasks/todo.md` are marked `[x]` (outer task checkbox)
+- [ ] No task's `Unit Tests (deferred)` checkbox is already checked `[x]` (would indicate tests were written during build — a violation)
+- [ ] `npm run build` or equivalent build command succeeds
+
+**If you find test files already created during the build phase:** Flag this to the user as a process violation. The build phase must not create test files — that is the test phase's responsibility.
+
 ### Step 1: Find Tasks Needing Tests
 
 Open `specs/tasks/todo.md`. Find tasks where the Unit Tests (deferred) section has an unchecked `Tests written` checkbox:

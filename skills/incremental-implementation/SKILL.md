@@ -85,6 +85,20 @@ When reading a task, two things must be skipped — both are reserved for the `/
 1. **npm test commands** in the Verification block — if a task's Verification block includes `npm test` commands, skip those. Only run `npm run build` and `npx tsc --noEmit` as verification.
 2. **Unit Tests (deferred) section** — every task includes a `**Unit Tests (deferred):**` block with a `- [ ] Tests written` checkbox and notes on what to test. Do NOT write those tests during the build phase. Do not create test files. Do not write test code. Do not check the `Tests written` checkbox. Treat the entire section as read-only context for the future `/test` phase.
 
+## Pre-Implementation Checkpoint (Mandatory)
+
+Before writing any code for a task, complete this checklist:
+
+1. **Read the task** from `specs/tasks/todo.md` — including the `**Domain skill:**` field
+2. **Classify the domain** — if the task has a `**Domain skill:**` field, use it directly. If the field is missing or says `None`, check which applies:
+   - [ ] UI work (components, layouts, state) → load `frontend-ui-engineering`
+   - [ ] API work (endpoints, contracts, middleware, HTTP status codes) → load `api-and-interface-design`
+   - [ ] Security work (auth, validation, PII, sessions) → load `security-and-hardening`
+   - [ ] None of the above → proceed directly
+3. **State the loaded skill explicitly** before writing any code — e.g., "Loading `api-and-interface-design` for this task (from Domain skill field)."
+
+Skipping steps 2 and 3 is a process violation. "I'll apply the patterns intuitively" is not a substitute for loading the skill. If the task's `**Domain skill:**` field names a skill, you must load it — no exceptions.
+
 ## Domain Skill Routing
 
 Before writing any code for a task, identify its domain and load the corresponding skill. Domain skills encode patterns that prevent entire categories of bugs.
@@ -314,7 +328,8 @@ If a session ends before all tasks are complete, commit the completed tasks at t
 - Touching files outside the task scope "while I'm here"
 - Creating new utility files for one-time operations
 - Committing after each task instead of once at the end
-- Starting implementation without loading the relevant domain skill first
+- Starting implementation without loading the relevant domain skill first (stating "Loading `api-and-interface-design`" before writing endpoint code is required, not optional)
+- Writing API endpoint code without loading `api-and-interface-design` — the skill catches missing versioning, inconsistent error schemas, wrong status codes
 - Todo.md not updated immediately after each completed task
 - Creating test files or writing test code during the build phase (reserved for the `/test` phase)
 - Checking the `Tests written` checkbox in a task's Unit Tests section (only the `/test` phase does this)
