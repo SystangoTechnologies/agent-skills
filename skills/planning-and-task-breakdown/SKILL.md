@@ -25,10 +25,11 @@ Decompose work into small, verifiable tasks with explicit acceptance criteria. G
 
 Before writing any code, operate in read-only mode:
 
+- Read `.context/project.md` and `.context/architecture.md` for system context
+- Read `.context/conventions.md` to identify existing patterns and standards to follow
+- Read `.context/concerns.md` to surface risks and unknowns before the plan is written
 - Read the spec and relevant codebase sections
-- Identify existing patterns and conventions
 - Map dependencies between components
-- Note risks and unknowns
 
 **Do NOT write code during planning.** The output is a plan document, not implementation.
 

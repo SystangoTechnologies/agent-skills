@@ -90,6 +90,7 @@ When reading a task, two things must be skipped — both are reserved for the `/
 Before writing any code for a task, complete this checklist:
 
 1. **Read the task** from `specs/tasks/todo.md` — including the `**Domain skill:**` field
+1.5 **Read project context** — check `.context/conventions.md` for project-specific naming and pattern rules that apply to this task. Check `.context/concerns.md` for known hazards in the files you'll touch.
 2. **Classify the domain** — if the task has a `**Domain skill:**` field, use it directly. If the field is missing or says `None`, check which applies:
    - [ ] UI work (components, layouts, state) → load `frontend-ui-engineering`
    - [ ] API work (endpoints, contracts, middleware, HTTP status codes) → load `api-and-interface-design`

@@ -37,6 +37,16 @@ When anything unexpected happens:
 
 Work through these steps in order. Do not skip steps.
 
+### Step 0: Orient to the System
+
+Before triaging, understand the architecture you're debugging in:
+
+- Read `.context/architecture.md` — know the layers and component boundaries so you can identify which layer is failing
+- Read `.context/stack.md` — know the runtime, framework, and toolchain so you can interpret the error correctly
+- Read `.context/concerns.md` — check for known fragile areas, intermittent issues, or environment quirks that may explain the bug
+
+This context shapes which follow-up questions you ask in Step 2 (Localize).
+
 ### Step 1: Reproduce
 
 Make the failure happen reliably. If you can't reproduce it, you can't fix it with confidence.

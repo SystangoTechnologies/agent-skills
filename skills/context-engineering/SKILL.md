@@ -90,6 +90,7 @@ Load the relevant spec section when starting a feature. Don't load the entire sp
 Before editing a file, read it. Before implementing a pattern, find an existing example in the codebase.
 
 **Pre-task context loading:**
+0. If `.context/OVERVIEW.md` exists, read it first — this is the canonical project map. Then read any relevant dimension files (`.context/project.md`, `.context/architecture.md`, `.context/conventions.md`) depending on your task.
 1. Read the file(s) you'll modify
 2. Read related test files
 3. Find one example of a similar pattern already in the codebase

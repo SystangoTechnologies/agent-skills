@@ -2,7 +2,7 @@
 description: Write unit tests for implemented tasks — reads deferred test notes from todo.md and generates comprehensive test coverage
 ---
 
-Invoke the agent-skills:generate-unit-tests skill.
+Invoke the sys:generate-unit-tests skill.
 
 Pick the next task in `specs/tasks/todo.md` whose **Unit Tests (deferred)** section has an unchecked `- [ ] Tests written` checkbox. For each task:
 

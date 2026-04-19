@@ -17,6 +17,7 @@ When a task arrives, identify the development phase and apply the corresponding 
 Task arrives
     │
     ├── simple task/user doesn't want spec-driven? ──→ Don't apply Spec driven, continue normally
+    ├── Unfamiliar existing codebase, no .context/ docs? ──→ brownfield-discovery
     ├── New project/feature/change? ──→ spec-driven-development
     ├── Have a spec, need tasks? ──────→ planning-and-task-breakdown
     ├── Implementing code? ────────────→ incremental-implementation
@@ -143,6 +144,7 @@ When transitioning between phases, verify the exit criteria of the previous phas
 For a complete feature, the typical skill sequence is:
 
 ```
+0. brownfield-discovery        → Map existing codebase (skip for greenfield)
 1. spec-driven-development     → Define what we're building
 2. planning-and-task-breakdown → Break into verifiable chunks
 3. context-engineering         → Load the right context
@@ -160,6 +162,7 @@ Not every task needs every skill. A bug fix might only need: `debugging-and-erro
 
 | Phase | Skill | One-Line Summary |
 |-------|-------|-----------------|
+| Discover | brownfield-discovery | Map tech, architecture, conventions, concerns of existing codebase |
 | Define | spec-driven-development | Requirements and acceptance criteria before code |
 | Plan | planning-and-task-breakdown | Decompose into small, verifiable tasks |
 | Build | incremental-implementation | Thin vertical slices, test each before expanding |

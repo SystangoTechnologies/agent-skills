@@ -127,6 +127,11 @@ Before looking at code, understand the intent:
 - What is the expected behavior change?
 ```
 
+Also ground yourself in project standards:
+- Read `.context/conventions.md` — to know the naming, pattern, and style standards being applied
+- Read `.context/architecture.md` — to know what existing patterns should be followed
+- Read `.context/concerns.md` — to know what risks affect the areas this change touches
+
 ### Step 2: Review the Tests First
 
 Tests reveal intent and coverage:
@@ -285,7 +290,7 @@ Part of code review is dependency review:
 - [ ] No unnecessary complexity
 
 ### Architecture
-- [ ] Follows existing patterns
+- [ ] Follows existing patterns (verified against .context/conventions.md and .context/architecture.md)
 - [ ] No unnecessary coupling or dependencies
 - [ ] Appropriate abstraction level
 

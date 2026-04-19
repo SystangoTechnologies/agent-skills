@@ -8,7 +8,7 @@
   },
   "plugins": [
     {
-      "name": "agent-skills",
+      "name": "sys",
       "source": {
         "source": "github",
         "repo": "SystangoTechnologies/agent-skills"

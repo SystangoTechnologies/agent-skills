@@ -2,7 +2,7 @@
 description: Implement the next task incrementally — build, verify, commit at the end
 ---
 
-Invoke the agent-skills:incremental-implementation skill.
+Invoke the sys:incremental-implementation skill.
 
 Pick the next unchecked task from `specs/tasks/todo.md`. For each task:
 
@@ -18,4 +18,4 @@ Do not write tests during implementation. If a task contains a **Unit Tests (def
 
 After ALL tasks are complete (or at end of session): commit all completed work once using the `git-workflow-and-versioning` skill.
 
-If any step fails, follow the `agent-skills:debugging-and-error-recovery` skill.
+If any step fails, follow the `sys:debugging-and-error-recovery` skill.

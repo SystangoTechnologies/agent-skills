@@ -35,6 +35,15 @@ SPECIFY ──→ PLAN ──→ TASKS ──→ IMPLEMENT
 
 Start with a high-level vision. Ask the human clarifying questions until requirements are concrete.
 
+**Ground yourself in project context first.** If `.context/` files exist (from brownfield-discovery), read them before listing assumptions:
+- `.context/project.md` — project purpose, users, non-goals
+- `.context/stack.md` — tech stack, dependencies, environment
+- `.context/architecture.md` — existing design decisions and constraints
+- `.context/conventions.md` — coding standards, gotchas
+- `.context/concerns.md` — known risks and technical debt
+
+This replaces guessing with known facts.
+
 **Surface assumptions immediately.** Before writing any spec content, list what you're assuming:
 
 ```
