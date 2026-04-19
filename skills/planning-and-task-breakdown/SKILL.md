@@ -79,7 +79,14 @@ Each vertical slice delivers working, testable functionality.
 
 ### Step 4: Write Tasks
 
-Each task follows this structure:
+Planning produces **two documents**, not one:
+
+- **`specs/tasks/plan.md`** — the high-level plan. Contains the overview, architecture decisions, a compact **Task Index** (one line per task), checkpoints, risks, and open questions. See the *Plan Document Template* below.
+- **`specs/tasks/todo.md`** — the detailed task list. Contains the **full per-task block** (template below) for every task in the index, stacked in order. See the *todo.md Template* below.
+
+Think of plan.md as the table of contents and todo.md as the chapters. Every task in plan.md's Task Index must have a matching detailed entry in todo.md.
+
+Each task in **todo.md** follows this structure:
 
 ```markdown
 ## Task [N]: [Short descriptive title]
@@ -118,6 +125,89 @@ Each task follows this structure:
 - **Unit Tests (deferred)** — required for every task. The `- [ ] Tests written` line must use checkbox syntax (`- [ ]`), not a plain bullet. This checkbox is the contract between the planning and testing phases — the `/test` phase checks it after writing tests. The build phase skips this section entirely and does not create test files.
 - **Verification** — every item must use checkbox syntax (`- [ ]`), not plain bullets. Build-phase gates verify compilation and runtime only — never `npm test`, `pnpm test`, or coverage thresholds.
 - **Domain skill** — required for every task. The planner knows the task's domain when writing it. Embed the classification so the builder doesn't have to re-derive it. Use `None` for pure infrastructure tasks (build config, utility functions, migrations with no auth surface). Tasks involving REST endpoints, HTTP status codes, request/response contracts, or middleware must specify `api-and-interface-design`. Tasks involving UI components, layouts, or state must specify `frontend-ui-engineering`. Tasks involving auth, validation, PII, or sessions must specify `security-and-hardening`. A task may list more than one skill if it spans domains.
+
+#### todo.md Template
+
+`todo.md` is a flat stack of detailed task blocks — no extra prose, no simplified bullets. Every task from plan.md's Task Index appears here in full form, in the same order:
+
+```markdown
+# Task List: [Feature/Project Name]
+
+Detailed tasks for the plan in `plan.md`. Build one task at a time, top to bottom.
+
+---
+
+## Task 1: [Short descriptive title]
+
+**Description:** One paragraph explaining what this task accomplishes.
+
+**Acceptance criteria:**
+- [ ] [Specific, testable condition]
+- [ ] [Specific, testable condition]
+
+**Unit Tests (deferred):**
+- [ ] Tests written
+- Functions/behaviors to cover: [e.g. createTask, validateInput]
+- Edge cases: [e.g. empty title, duplicate ID, missing required field]
+- Test type: [unit | component | end-to-end]
+- Suggested file: `tests/path/to/feature.test.ts`
+
+**Verification:**
+- [ ] Build succeeds: `npm run build`
+- [ ] Type checking passes: `npx tsc --noEmit`
+- [ ] Manual check: [description of what to verify]
+
+**Dependencies:** None
+
+**Files likely touched:**
+- `src/path/to/file.ts`
+
+**Estimated scope:** Small: 1-2 files
+
+**Domain skill:** None
+
+---
+
+## Task 2: [Short descriptive title]
+
+**Description:** ...
+
+**Acceptance criteria:**
+- [ ] ...
+
+**Unit Tests (deferred):**
+- [ ] Tests written
+- Functions/behaviors to cover: ...
+- Edge cases: ...
+- Test type: unit
+- Suggested file: `tests/path/to/feature.test.ts`
+
+**Verification:**
+- [ ] Build succeeds: `npm run build`
+- [ ] Type checking passes: `npx tsc --noEmit`
+- [ ] Manual check: ...
+
+**Dependencies:** Task 1
+
+**Files likely touched:**
+- `src/path/to/file.ts`
+
+**Estimated scope:** Medium: 3-5 files
+
+**Domain skill:** api-and-interface-design
+
+---
+
+## Checkpoint: After Tasks 1-2
+- [ ] Build passes
+- [ ] Core flow works end-to-end
+
+---
+
+## Task 3: ...
+```
+
+Every task block must include all fields from the per-task template above. Do not abbreviate, do not use simplified bullets, do not omit the Unit Tests (deferred) section. If you find yourself shortening a task block to save space, stop — either the task belongs in the Task Index only (plan.md) or it needs its full detail here.
 
 ### Step 5: Validate Task List Structure
 
@@ -176,6 +266,8 @@ If a task is L or larger, it should be broken into smaller tasks. An agent perfo
 
 ## Plan Document Template
 
+This is the template for **plan.md only**. The Task Index below is a compact reference — one line per task. The full detailed task blocks go in **todo.md** (see the *todo.md Template* in Step 4).
+
 ```markdown
 # Implementation Plan: [Feature/Project Name]
 
@@ -186,7 +278,9 @@ If a task is L or larger, it should be broken into smaller tasks. An agent perfo
 - [Key decision 1 and rationale]
 - [Key decision 2 and rationale]
 
-## Task List
+## Task Index
+
+Compact index of tasks. Full detail for each task lives in `todo.md`.
 
 ### Phase 1: Foundation
 - [ ] Task 1: ...

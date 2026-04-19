@@ -8,13 +8,14 @@ This is the agent-skills project — a collection of production-grade engineerin
 skills/       → Core skills (SKILL.md per directory)
 agents/       → Reusable agent personas (code-reviewer, test-engineer, security-auditor)
 hooks/        → Session lifecycle hooks
-.claude/commands/ → Slash commands (/spec, /plan, /build, /test, /review, /code-simplify, /ship)
+.claude/commands/ → Slash commands (/discover, /spec, /plan, /build, /test, /review, /code-simplify, /ship)
 references/   → Supplementary checklists (testing, performance, security, accessibility)
 docs/         → Setup guides for different tools
 ```
 
 ## Skills by Phase
 
+**Discover:** brownfield-discovery
 **Define:** spec-driven-development
 **Plan:** planning-and-task-breakdown
 **Build:** incremental-implementation, context-engineering, frontend-ui-engineering, api-and-interface-design  
@@ -33,8 +34,16 @@ docs/         → Setup guides for different tools
 
 ## Commands
 
+All skills are invoked via slash commands with the `sys:` prefix (e.g., `/discover` → `sys:brownfield-discovery`).
+
 - `npm test` — Not applicable (this is a documentation project)
 - Validate: Check that all SKILL.md files have valid YAML frontmatter with name and description
+
+## Plugin Configuration
+
+- **Plugin name:** `sys` (changed from `agent-skills`)
+- **Command prefix:** `sys:` for all skill invocations
+- **Marketplace install:** `/plugin install sys@systango-agent-skills`
 
 ## Boundaries
 

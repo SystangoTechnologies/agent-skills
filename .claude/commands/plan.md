@@ -13,4 +13,15 @@ Read the existing spec (SPEC.md or equivalent) and the relevant codebase section
 5. Add checkpoints between phases
 6. Present the plan for human review
 
-Save the plan to {project-root}/specs/tasks/plan.md and task list to {project-root}/specs/tasks/todo.md.
+Planning produces **two files**. Write them in this order — do not interleave:
+
+**Step A — Write `{project-root}/specs/tasks/plan.md` first.**
+Use the *Plan Document Template* from the skill. plan.md contains the overview, architecture decisions, a compact **Task Index** (one line per task), checkpoints, risks, and open questions. No detailed task blocks in this file.
+
+**Step B — Re-read `{project-root}/specs/tasks/plan.md` before writing todo.md.**
+This is required, not optional. Reading plan.md back grounds the next step in the index you just wrote and refreshes context on the task ordering. Also re-anchor on the per-task template and the *todo.md Template* in the skill's Step 4.
+
+**Step C — Write `{project-root}/specs/tasks/todo.md`.**
+For every task in plan.md's Task Index, write the **full detailed task block** per the per-task template — acceptance criteria, Unit Tests (deferred), verification, dependencies, files, scope, domain skill. No simplified bullets, no abbreviated entries. The order of tasks in todo.md must match plan.md's Task Index exactly.
+
+Before finishing, run the Step 5 validation checklist from the skill against todo.md.
