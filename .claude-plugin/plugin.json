@@ -1,7 +1,7 @@
 {
   "name": "sys",
-  "description": "Production-grade engineering skills for AI coding agents — covering the full software development lifecycle from spec to ship.",
-  "version": "1.0.5",
+  "description": "Production-grade engineering skills created by Systango Technologies for AI coding agents — covering the full software development lifecycle from spec to ship.",
+  "version": "1.0.6",
   "author": {
     "name": "Systango Technologies"
   },
