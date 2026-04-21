@@ -10,7 +10,7 @@ mirrors them into the layout Cursor expects:
 | Source (this repo)         | Destination (user global) |
 | -------------------------- | ------------------------- |
 | `skills/<name>/`           | `~/.cursor/skills/<name>/`      |
-| `.claude/commands/<x>.md`  | `~/.cursor/commands/<x>.md` and `~/.cursor/commands/sys-<x>.md` |
+| `.claude/commands/<x>.md`  | `~/.cursor/commands/sys-<x>.md` |
 | `agents/<x>.md`            | `~/.cursor/agents/<x>.md`       |
 | `hooks/cursor-session-start.sh` | entry in `~/.cursor/hooks.json` |
 
@@ -35,9 +35,8 @@ The installer:
 
 1. Clones (or `git pull`s) the repo into `~/.cursor/plugins/agent-skills/`.
 2. Symlinks skills, commands, and agents into `~/.cursor/`.
-   - Commands are exposed with both base names (for example `/spec`) and `sys-`
-     aliases (for example `/sys-spec`) so Cursor usage stays consistent with the
-     `sys:*` convention in command content.
+   - Commands are exposed only as `sys-` aliases (for example `/sys-spec`) so
+     Cursor usage stays consistent with the `sys:*` convention in command content.
 3. Merges a single `sessionStart` entry into `~/.cursor/hooks.json` (merges,
    doesn't overwrite — any existing hooks you have are preserved).
 

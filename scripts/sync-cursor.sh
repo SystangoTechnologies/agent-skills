@@ -4,7 +4,7 @@
 #
 # Source (in this repo) -> Destination (~/.cursor):
 #   skills/<name>/           ->  skills/<name>/
-#   .claude/commands/<x>.md  ->  commands/<x>.md + commands/sys-<x>.md
+#   .claude/commands/<x>.md  ->  commands/sys-<x>.md
 #   agents/<x>.md            ->  agents/<x>.md
 #
 # Called by install-cursor.sh and by the sessionStart hook after a successful
@@ -110,9 +110,8 @@ link_entries() {
   shopt -u nullglob
 }
 
-link_entries "$PLUGIN_DIR/skills"          "$CURSOR_HOME/skills"
-link_entries "$PLUGIN_DIR/.claude/commands" "$CURSOR_HOME/commands"
-link_entries "$PLUGIN_DIR/agents"          "$CURSOR_HOME/agents"
+link_entries "$PLUGIN_DIR/skills" "$CURSOR_HOME/skills"
+link_entries "$PLUGIN_DIR/agents" "$CURSOR_HOME/agents"
 
 link_command_aliases() {
   # link_command_aliases <src_dir> <dst_dir>
@@ -173,6 +172,38 @@ link_command_aliases() {
   shopt -u nullglob
 }
 
+prune_base_command_symlinks() {
+  # Remove non-prefixed command symlinks that point into this plugin's command
+  # directory so Cursor shows only prefixed slash commands (e.g. /sys-spec).
+  local src="$1" dst="$2"
+  local prefix="$COMMAND_ALIAS_PREFIX"
+  local entry stem base current
+
+  [[ -n "$prefix" ]] || return 0
+  [[ -d "$src" ]] || return 0
+  [[ -d "$dst" ]] || return 0
+
+  shopt -s nullglob
+  for entry in "$src"/*.md; do
+    stem="$(basename "${entry%.md}")"
+    base="$dst/${stem}.md"
+
+    # If the source file itself is already prefixed, keep it.
+    if [[ "$stem" == "$prefix"* ]]; then
+      continue
+    fi
+
+    [[ -L "$base" ]] || continue
+    current="$(abs_target "$base" || true)"
+    if [[ "$current" == "$entry" ]]; then
+      rm -f -- "$base"
+      log "removed base command symlink $base"
+    fi
+  done
+  shopt -u nullglob
+}
+
+prune_base_command_symlinks "$PLUGIN_DIR/.claude/commands" "$CURSOR_HOME/commands"
 link_command_aliases "$PLUGIN_DIR/.claude/commands" "$CURSOR_HOME/commands"
 
 log "synced skills/commands/agents into $CURSOR_HOME"
