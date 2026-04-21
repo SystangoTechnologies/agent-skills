@@ -64,7 +64,33 @@ claude --plugin-dir /path/to/agent-skills
 
 **Cursor**
 
-Copy any `SKILL.md` into `.cursor/rules/`, or reference the full `skills/` directory. See [docs/cursor-setup.md](docs/cursor-setup.md).
+Install globally into `~/.cursor/` so every Cursor project on the machine auto-loads all 22 skills, 9 slash commands, and 3 agent personas — with a `sessionStart` hook that self-updates on a throttled `git pull`, matching the Claude plugin experience.
+
+**One-line install:**
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/SystangoTechnologies/agent-skills/main/scripts/install-cursor.sh | bash
+```
+
+**Or from a local clone:**
+
+```bash
+git clone https://github.com/SystangoTechnologies/agent-skills.git
+cd agent-skills && ./scripts/install-cursor.sh
+```
+
+The installer clones the repo into `~/.cursor/plugins/agent-skills/` and symlinks content into `~/.cursor/{skills,commands,agents}/`. Restart Cursor (or start a new agent session) and the skills, `/spec`, `/plan`, `/build`, etc. become available in every project.
+
+**Uninstall:**
+
+```bash
+~/.cursor/plugins/agent-skills/scripts/uninstall-cursor.sh           # unlink + detach hook
+~/.cursor/plugins/agent-skills/scripts/uninstall-cursor.sh --purge   # also delete the checkout
+```
+
+Only symlinks that point back into the plugin are removed — any other skills, commands, or hooks you already have in `~/.cursor/` are left untouched.
+
+See [scripts/README.md](scripts/README.md) for options (custom install dir, auto-update tuning, forks) and [docs/cursor-setup.md](docs/cursor-setup.md) for alternative per-project setups (`.cursor/rules/`, Notepads).
 
 
 
