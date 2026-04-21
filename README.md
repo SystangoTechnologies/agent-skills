@@ -79,7 +79,7 @@ git clone https://github.com/SystangoTechnologies/agent-skills.git
 cd agent-skills && ./scripts/install-cursor.sh
 ```
 
-The installer clones the repo into `~/.cursor/plugins/agent-skills/` and symlinks content into `~/.cursor/{skills,commands,agents}/`. Restart Cursor (or start a new agent session) and the skills, `/spec`, `/plan`, `/build`, etc. become available in every project.
+The installer clones the repo into `~/.cursor/plugins/agent-skills/` and symlinks content into `~/.cursor/{skills,commands,agents}/`. Commands are available with both base names and `sys-` aliases (for example `/spec` and `/sys-spec`). Restart Cursor (or start a new agent session) and the skills plus slash commands become available in every project.
 
 **Uninstall:**
 
