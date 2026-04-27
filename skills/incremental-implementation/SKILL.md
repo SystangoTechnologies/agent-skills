@@ -7,7 +7,7 @@ description: Delivers changes incrementally. Use when implementing any feature o
 
 ## Overview
 
-Build in thin vertical slices — implement one piece, verify it compiles, then expand. Avoid implementing an entire feature in one pass. Each increment should leave the system in a compilable state. Read pending tasks from `specs/tasks/todo.md`, process them in order, and commit all completed work once at the end of the session. This is the execution discipline that makes large features manageable.
+Build in thin vertical slices — implement one piece, verify it compiles, then expand. Avoid implementing an entire feature in one pass. Each increment should leave the system in a compilable state. Read pending tasks from `specs/tasks/todo.md`, process them in order, and update checkboxes as you complete work. This is the execution discipline that makes large features manageable.
 
 ## When to Use
 
@@ -28,9 +28,6 @@ Build in thin vertical slices — implement one piece, verify it compiles, then 
 │   Verify build compiles ──→                     │
 │   Mark [x] in todo.md ──→ Next task             │
 │                                                 │
-│   (After ALL tasks done)                        │
-│   Commit all work once                          │
-│                                                 │
 └─────────────────────────────────────────────────┘
 ```
 
@@ -42,9 +39,7 @@ For each task:
 4. **Implement** the smallest complete piece of functionality
 5. **Verify** — confirm the build compiles (`npm run build`) and type checking passes (`npx tsc --noEmit`)
 6. **Update todo** — mark the task `[x]` in `specs/tasks/todo.md` immediately after verification
-7. **Move to the next task** — do not commit yet; continue until all tasks are done
-
-After all tasks are complete, commit once (see End-of-Session Commit below).
+7. **Move to the next task** — continue until all tasks are done or the session ends
 
 ## Todo File Integration
 
@@ -219,9 +214,9 @@ NOTICED BUT NOT TOUCHING:
 
 Each increment changes one logical thing. Don't mix concerns:
 
-**Bad:** One commit that adds a new component, refactors an existing one, and updates the build config.
+**Bad:** One increment that adds a new component, refactors an existing one, and updates the build config.
 
-**Good:** Three separate logical changes implemented in sequence, each tracked in todo.md, all committed together at end of session.
+**Good:** Three separate logical changes implemented in sequence, each tracked in todo.md as its own completed task.
 
 ### Rule 2: Keep It Compilable
 
@@ -261,7 +256,7 @@ Each increment should be independently revertable:
 - Additive changes (new files, new functions) are easy to revert
 - Modifications to existing code should be minimal and focused
 - Database migrations should have corresponding rollback migrations
-- Avoid deleting something in one commit and replacing it in the same commit — separate them
+- Avoid deleting something and replacing it in the same increment without a clear intermediate state — separate them across increments when risk warrants it
 
 ## Working with Agents
 
@@ -274,8 +269,7 @@ For each task: identify the domain (UI, API, or security/auth),
 load the relevant skill, implement the slice, verify it compiles,
 and mark it complete in todo.md.
 
-Do not write tests during implementation.
-Do not commit after each task — commit once when all tasks are done."
+Do not write tests during implementation."
 ```
 
 Be explicit about what's in scope and what's NOT for each task. The agent should verify dependencies are complete before starting each task.
@@ -291,20 +285,9 @@ After each task, verify:
 - [ ] The new functionality works as expected
 - [ ] The task is marked `[x]` in `specs/tasks/todo.md`
 
-Do NOT commit after each task. Commit once after all tasks are complete.
+## Version control
 
-## End-of-Session Commit
-
-After all tasks in `specs/tasks/todo.md` are marked complete (or at end of session if not all tasks fit), commit all work once.
-
-1. Verify the full build is clean: `npm run build`
-2. Verify type checking passes: `npx tsc --noEmit`
-3. Verify linting passes: `npm run lint`
-4. Confirm all completed tasks are marked `[x]` in `specs/tasks/todo.md`
-5. Follow the `git-workflow-and-versioning` skill to create an atomic commit covering all completed tasks
-6. Write a commit message describing what was implemented, not individual task numbers
-
-If a session ends before all tasks are complete, commit the completed tasks at that point rather than leaving uncommitted changes across session boundaries.
+This skill does not prescribe when or how to commit. When the user or project needs git workflow (branching, messages, atomicity), use the `git-workflow-and-versioning` skill.
 
 ## Common Rationalizations
 
@@ -312,11 +295,11 @@ If a session ends before all tasks are complete, commit the completed tasks at t
 |---|---|
 | "I'll test it all at the end" | Bugs compound. A bug in Slice 1 makes Slices 2-5 wrong. Test each slice. |
 | "It's faster to do it all at once" | It *feels* faster until something breaks and you can't find which of 500 changed lines caused it. |
-| "These changes are too small to commit separately" | Small commits are free. Large commits hide bugs and make rollbacks painful. |
+| "These changes are too small to split" | Small, focused increments are easier to verify and roll back than one large mixed change. |
 | "I'll add the feature flag later" | If the feature isn't complete, it shouldn't be user-visible. Add the flag now. |
 | "This refactor is small enough to include" | Refactors mixed with features make both harder to review and debug. Separate them. |
 | "I'll write tests for this later" | Correct — and intentional. The task's **Unit Tests (deferred)** section already captures what to test. Run `/test` after the build phase. Do not write tests now, even if the section makes it tempting. |
-| "I should commit this before moving on" | Mark the todo checkbox instead. Commit once at the end. The checkbox is durable across compaction. |
+| "I should checkpoint in git before moving on" | Mark the todo checkbox when the task is verified — it is durable across compaction. Use `git-workflow-and-versioning` only when the user or project asks for commits. |
 
 ## Red Flags
 
@@ -324,11 +307,10 @@ If a session ends before all tasks are complete, commit the completed tasks at t
 - "Let me just quickly add this too" scope expansion
 - Skipping the build/compile verify step to move faster
 - Build or linting broken between increments
-- Large uncommitted changes accumulating
+- Many files changing without marking completed tasks `[x]` in todo.md
 - Building abstractions before the third use case demands it
 - Touching files outside the task scope "while I'm here"
 - Creating new utility files for one-time operations
-- Committing after each task instead of once at the end
 - Starting implementation without loading the relevant domain skill first (stating "Loading `api-and-interface-design`" before writing endpoint code is required, not optional)
 - Writing API endpoint code without loading `api-and-interface-design` — the skill catches missing versioning, inconsistent error schemas, wrong status codes
 - Todo.md not updated immediately after each completed task
@@ -344,5 +326,3 @@ After all tasks in a session are complete:
 - [ ] Type checking passes (`npx tsc --noEmit`)
 - [ ] Linting passes (`npm run lint`)
 - [ ] The feature works end-to-end as specified by acceptance criteria
-- [ ] All work is committed in a single cohesive commit
-- [ ] No uncommitted changes remain
