@@ -1,6 +1,6 @@
 ---
 name: jira-planning-and-task-breakdown
-description: Breaks Jira story work into ordered tasks. Use when you have a story spec and need to break work into implementable tasks with story-scoped files under `spec/{story-id}/tasks/`. Use when a task feels too large to start, when you need to estimate scope, or when parallel work is possible.
+description: Breaks Jira story work into ordered tasks. Use when you have a story spec and need to break work into implementable tasks with story-scoped files under `jira-spec/{story-id}/`. Use when a task feels too large to start, when you need to estimate scope, or when parallel work is possible.
 ---
 
 # Jira Planning and Task Breakdown
@@ -28,7 +28,7 @@ Before writing any code, operate in read-only mode:
 - Read `.context/project.md` and `.context/architecture.md` for system context
 - Read `.context/conventions.md` to identify existing patterns and standards to follow
 - Read `.context/concerns.md` to surface risks and unknowns before the plan is written
-- Read `spec/{story-id}.md` and relevant codebase sections
+- Read `jira-spec/{story-id}/spec-{story-id}.md` and relevant codebase sections
 - Map dependencies between components
 
 **Do NOT write code during planning.** The output is a plan document, not implementation.
@@ -81,10 +81,12 @@ Each vertical slice delivers working, testable functionality.
 
 Planning produces **two documents**, not one:
 
-- **`spec/{story-id}/tasks/plan.md`** - the high-level plan. Contains the overview, architecture decisions, a compact **Task Index** (one line per task), checkpoints, risks, and open questions. See the *Plan Document Template* below.
-- **`spec/{story-id}/tasks/todo.md`** - the detailed task list. Contains the **full per-task block** (template below) for every task in the index, stacked in order. See the *todo.md Template* below.
+- **`jira-spec/{story-id}/plan-{story-id}.md`** - the high-level plan. Contains the overview, architecture decisions, a compact **Task Index** (one line per task), checkpoints, risks, and open questions. See the *Plan Document Template* below.
+- **`jira-spec/{story-id}/todo-{story-id}.md`** - the detailed task list. Contains the **full per-task block** (template below) for every task in the index, stacked in order. See the *todo.md Template* below.
 
 Think of plan.md as the table of contents and todo.md as the chapters. Every task in plan.md's Task Index must have a matching detailed entry in todo.md.
+
+For Jira workflow, each task entry must represent a Jira task/subtask (or directly mappable unit) under the current story.
 
 Each task in **todo.md** follows this structure:
 
@@ -128,12 +130,12 @@ Each task in **todo.md** follows this structure:
 
 #### todo.md Template
 
-`todo.md` is a flat stack of detailed task blocks - no extra prose, no simplified bullets. Every task from plan.md's Task Index appears here in full form, in the same order:
+`todo-{story-id}.md` is a flat stack of detailed task blocks - no extra prose, no simplified bullets. Every task from plan-{story-id}.md's Task Index appears here in full form, in the same order:
 
 ```markdown
 # Task List: [Feature/Project Name]
 
-Detailed tasks for the plan in `plan.md`. Build one task at a time, top to bottom.
+Detailed tasks for the plan in `plan-{story-id}.md`. Build one task at a time, top to bottom.
 
 ---
 
@@ -223,9 +225,10 @@ Before advancing to the build phase, run this checklist against every task in th
 - [ ] Every acceptance criterion uses checkbox format (`- [ ]`)
 - [ ] Every verification step uses checkbox format (`- [ ]`)
 - [ ] Every task that involves API, UI, or security work has a `**Domain skill:**` field identifying which skill to load before implementation. Tasks with REST endpoints, HTTP status codes, request/response contracts, or middleware must specify `api-and-interface-design`. Pure infrastructure tasks use `None`
+- [ ] Every task is phrased as a Jira task/subtask for the current story (not generic engineering buckets)
 
 **File location:**
-- [ ] Task list is saved to `spec/{story-id}/tasks/todo.md`
+- [ ] Task list is saved to `jira-spec/{story-id}/todo-{story-id}.md`
 
 ### Step 6: Order and Checkpoint
 
@@ -280,7 +283,7 @@ This is the template for **plan.md only**. The Task Index below is a compact ref
 
 ## Task Index
 
-Compact index of tasks. Full detail for each task lives in `todo.md`.
+Compact index of tasks. Full detail for each task lives in `todo-{story-id}.md`.
 
 ### Phase 1
 - [ ] Task 1: ...
@@ -343,6 +346,7 @@ When multiple agents or sessions are available:
 - Task description mentioning "create test files", "placeholder tests", or "dummy test files" - no test files are created during build
 - Gate or verification step that requires `npm test`, `pnpm test`, `--listTests`, or coverage thresholds - build gates verify compilation and runtime, not test coverage
 - API/UI/security task missing a `Domain skill` field - the planner knows the domain; don't make the builder guess
+- Tasks do not map cleanly to Jira tasks/subtasks for the current story
 - All tasks are XL-sized
 - No checkpoints between tasks
 - Dependency order isn't considered
@@ -360,7 +364,8 @@ Before starting implementation, confirm:
 - [ ] Task dependencies are identified and ordered correctly
 - [ ] No task touches more than ~5 files
 - [ ] Checkpoints exist between major phases
-- [ ] Story spec exists at `spec/{story-id}.md`
-- [ ] `plan.md` saved at `spec/{story-id}/tasks/plan.md`
-- [ ] `todo.md` saved at `spec/{story-id}/tasks/todo.md`
+- [ ] Story spec exists at `jira-spec/{story-id}/spec-{story-id}.md`
+- [ ] `plan.md` saved at `jira-spec/{story-id}/plan-{story-id}.md`
+- [ ] `todo.md` saved at `jira-spec/{story-id}/todo-{story-id}.md`
+- [ ] Tasks represent Jira tasks/subtasks for the current story
 - [ ] The human has reviewed and approved the plan

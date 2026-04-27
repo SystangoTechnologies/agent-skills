@@ -47,6 +47,8 @@ Start with a high-level vision. Ask the human clarifying questions until require
 4. If a key is provided and Jira is connected, fetch story context first and use it as baseline requirements.
 5. Inspect the story/ticket description for related Jira ticket mentions (for example, `VS-11`, `PROJ-245`).
 6. If related tickets are found and accessible, fetch their context too and merge only relevant details into the baseline requirements.
+7. Ask the user: "Would you also like to pull any additional context?" and incorporate provided context if relevant.
+8. Scope guard: do not create specs for related/dependency tickets; create a spec only for the current ticket the user wants to achieve.
 
 **Ground yourself in project context first.** If `.context/` files exist (from brownfield-discovery), read them before listing assumptions:
 - `.context/project.md` - project purpose, users, non-goals
@@ -136,7 +138,7 @@ Don't silently fill in ambiguous requirements. The spec's entire purpose is to s
 [Anything unresolved that needs human input]
 ```
 
-**Storage rule:** Save the spec to `spec/{story-id}.md` (example: `spec/VS-10.md`).
+**Storage rule:** Save the spec to `jira-spec/{story-id}/spec-{story-id}.md` (example: `jira-spec/VS-10/spec-VS-10.md`).
 
 **Reframe instructions as success criteria.** When receiving vague requirements, translate them into concrete conditions:
 
@@ -206,6 +208,7 @@ The spec is a living document, not a one-time artifact:
 | "The user knows what they want" | Even clear requests have implicit assumptions. The spec surfaces those assumptions. |
 | "I'll skip Jira for now and map it later" | Jira context is mandatory in this skill; skipping it breaks traceability and creates requirement drift. |
 | "I can ignore related tickets mentioned in description" | Related tickets often carry hidden dependencies or constraints; skipping them creates incomplete specs. |
+| "I'll create specs for every dependency ticket while I'm here" | Dependency tickets provide context; spec creation remains focused on the single ticket the user requested. |
 
 ## Red Flags
 
@@ -216,7 +219,8 @@ The spec is a living document, not a one-time artifact:
 - Skipping the spec because "it's obvious what to build"
 - Writing the spec without checking Jira MCP connectivity
 - Ignoring related ticket keys explicitly mentioned in the story/ticket description
-- Saving the Jira spec outside `spec/{story-id}.md`
+- Creating specs for dependency tickets instead of focusing on the current requested ticket
+- Saving the Jira spec outside `jira-spec/{story-id}/spec-{story-id}.md`
 
 ## Verification
 
@@ -225,8 +229,10 @@ Before proceeding to implementation, confirm:
 - [ ] Jira MCP connectivity was checked before spec authoring
 - [ ] Jira story key (or explicit fallback identifier) is confirmed
 - [ ] Related ticket mentions in the story/ticket description were checked; relevant context was included when available
+- [ ] User was asked whether to pull additional context; provided context was incorporated when relevant
+- [ ] No specs were created for dependency/related tickets
 - [ ] The spec covers all six core areas
 - [ ] The human has reviewed and approved the spec
 - [ ] Success criteria are specific and testable
 - [ ] Boundaries (Always/Ask First/Never) are defined
-- [ ] The spec is saved at `spec/{story-id}.md`
+- [ ] The spec is saved at `jira-spec/{story-id}/spec-{story-id}.md`
