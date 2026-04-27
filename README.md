@@ -17,7 +17,7 @@ Skills encode the workflows, quality gates, and best practices that senior engin
 
 ## Commands
 
-8 slash commands that map to the development lifecycle. Each one activates the right skills automatically.
+11 slash commands map to the development lifecycle. Each one activates the right skills automatically.
 
 
 | What you're doing    | Command          | Key principle           |
@@ -30,6 +30,9 @@ Skills encode the workflows, quality gates, and best practices that senior engin
 | Simplify the code    | `/code-simplify` | Clarity over cleverness |
 | Ship to production   | `/ship`          | Faster is safer         |
 | Small, ad-hoc change | `/quick`         | Tracked, atomic, fast   |
+| Define from Jira     | `/sys-jira-spec` | Jira-grounded spec      |
+| Plan from Jira       | `/sys-jira-plan` | Story-scoped task plans |
+| Ship with Jira sync  | `/sys-jira-ship` | Launch + ticket updates |
 
 
 Skills also activate automatically based on what you're doing — designing an API triggers `api-and-interface-design`, building UI triggers `frontend-ui-engineering`, and so on.
@@ -64,7 +67,7 @@ claude --plugin-dir /path/to/agent-skills
 
 **Cursor**
 
-Install globally into `~/.cursor/` so every Cursor project on the machine auto-loads all 22 skills, 9 slash commands, and 3 agent personas — with a `sessionStart` hook that self-updates on a throttled `git pull`, matching the Claude plugin experience.
+Install globally into `~/.cursor/` so every Cursor project on the machine auto-loads all 25 skills, 12 slash commands, and 3 agent personas — with a `sessionStart` hook that self-updates on a throttled `git pull`, matching the Claude plugin experience.
 
 **One-line install:**
 
@@ -142,9 +145,19 @@ Skills are plain Markdown - they work with any agent that accepts system prompts
 
 ---
 
-## All 20 Skills
+## All 20 Core Skills
 
 The commands above are the entry points. Under the hood, they activate these 20 skills — each one a structured workflow with steps, verification gates, and anti-rationalization tables. You can also reference any skill directly.
+
+### Jira Workflow Variants
+
+These additional skills mirror the core `/spec`, `/plan`, and `/ship` flows while adding Jira-native requirements:
+
+| Skill                                                                              | What It Does                                                                                                              | Use When                                                                        |
+| ---------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------- |
+| [jira-spec-driven-development](skills/jira-spec-driven-development/SKILL.md)       | Clone of spec-driven workflow with mandatory Jira MCP validation, story context loading, and related-ticket context use | Defining work from Jira tickets/stories                                          |
+| [jira-planning-and-task-breakdown](skills/jira-planning-and-task-breakdown/SKILL.md) | Clone of planning workflow with story-scoped plan artifacts under `spec/{story-id}/tasks/`                              | Planning implementation tasks for a Jira-scoped spec                             |
+| [jira-shipping-and-launch](skills/jira-shipping-and-launch/SKILL.md)               | Clone of shipping workflow with mandatory Jira ticket/task comment updates during launch                                  | Releasing features where Jira ticket updates are required as part of ship phase |
 
 ### Define - Clarify what to build
 
@@ -299,7 +312,7 @@ agent-skills/
 ├── agents/                            # 3 specialist personas
 ├── references/                        # 4 supplementary checklists
 ├── hooks/                             # Session lifecycle hooks
-├── .claude/commands/                  # 8 slash commands
+├── .claude/commands/                  # 12 slash commands (core + Jira variants)
 └── docs/                              # Setup guides per tool
 ```
 

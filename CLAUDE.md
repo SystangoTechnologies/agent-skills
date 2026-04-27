@@ -8,7 +8,7 @@ This is the agent-skills project — a collection of production-grade engineerin
 skills/       → Core skills (SKILL.md per directory)
 agents/       → Reusable agent personas (code-reviewer, test-engineer, security-auditor)
 hooks/        → Session lifecycle hooks
-.claude/commands/ → Slash commands (/discover, /spec, /plan, /build, /test, /review, /code-simplify, /ship, /quick)
+.claude/commands/ → Slash commands (/discover, /spec, /plan, /build, /test, /review, /code-simplify, /ship, /quick, /sys-jira-spec, /sys-jira-plan, /sys-jira-ship)
 references/   → Supplementary checklists (testing, performance, security, accessibility)
 docs/         → Setup guides for different tools
 ```
@@ -16,12 +16,12 @@ docs/         → Setup guides for different tools
 ## Skills by Phase
 
 **Discover:** brownfield-discovery
-**Define:** spec-driven-development
-**Plan:** planning-and-task-breakdown
+**Define:** spec-driven-development, jira-spec-driven-development
+**Plan:** planning-and-task-breakdown, jira-planning-and-task-breakdown
 **Build:** incremental-implementation, context-engineering, frontend-ui-engineering, api-and-interface-design  
 **Verify:** browser-testing-with-devtools, debugging-and-error-recovery
 **Review:** code-review-and-quality, code-simplification, security-and-hardening, performance-optimization
-**Ship:** documentation-and-adrs, shipping-and-launch
+**Ship:** documentation-and-adrs, shipping-and-launch, jira-shipping-and-launch
 **Ad-hoc:** quick-task-execution
 
 ## Conventions
