@@ -30,9 +30,9 @@ Skills encode the workflows, quality gates, and best practices that senior engin
 | Simplify the code    | `/code-simplify` | Clarity over cleverness |
 | Ship to production   | `/ship`          | Faster is safer         |
 | Small, ad-hoc change | `/quick`         | Tracked, atomic, fast   |
-| Define from Jira     | `/sys-jira-spec` | Jira-grounded spec      |
-| Plan from Jira       | `/sys-jira-plan` | Story-scoped task plans |
-| Ship with Jira sync  | `/sys-jira-ship` | Launch + ticket updates |
+| Define from Jira     | `/jira-spec` | Jira-grounded spec      |
+| Plan from Jira       | `/jira-plan` | Story-scoped task plans |
+| Ship with Jira sync  | `/jira-ship` | Launch + ticket updates |
 
 
 Skills also activate automatically based on what you're doing — designing an API triggers `api-and-interface-design`, building UI triggers `frontend-ui-engineering`, and so on.
@@ -145,19 +145,9 @@ Skills are plain Markdown - they work with any agent that accepts system prompts
 
 ---
 
-## All 20 Core Skills
+## All 25 Skills
 
-The commands above are the entry points. Under the hood, they activate these 20 skills — each one a structured workflow with steps, verification gates, and anti-rationalization tables. You can also reference any skill directly.
-
-### Jira Workflow Variants
-
-These additional skills mirror the core `/spec`, `/plan`, and `/ship` flows while adding Jira-native requirements:
-
-| Skill                                                                              | What It Does                                                                                                              | Use When                                                                        |
-| ---------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------- |
-| [jira-spec-driven-development](skills/jira-spec-driven-development/SKILL.md)       | Clone of spec-driven workflow with mandatory Jira MCP validation, story context loading, and related-ticket context use | Defining work from Jira tickets/stories                                          |
-| [jira-planning-and-task-breakdown](skills/jira-planning-and-task-breakdown/SKILL.md) | Clone of planning workflow with story-scoped plan artifacts under `jira-spec/{story-id}/`                               | Planning implementation tasks for a Jira-scoped spec                             |
-| [jira-shipping-and-launch](skills/jira-shipping-and-launch/SKILL.md)               | Clone of shipping workflow with mandatory Jira ticket/task comment updates during launch                                  | Releasing features where Jira ticket updates are required as part of ship phase |
+The commands above are the entry points. Under the hood, they activate 25 skills — including the core lifecycle workflows, Jira-aware variants, and supporting skills — each one a structured process with steps, verification gates, and anti-rationalization tables. You can also reference any skill directly.
 
 ### Define - Clarify what to build
 
@@ -166,6 +156,7 @@ These additional skills mirror the core `/spec`, `/plan`, and `/ship` flows whil
 | ------------------------------------------------------------------ | --------------------------------------------------------------------------------------------------------- | ------------------------------------------------------ |
 | [idea-refine](skills/idea-refine/SKILL.md)                         | Structured divergent/convergent thinking to turn vague ideas into concrete proposals                      | You have a rough concept that needs exploration        |
 | [spec-driven-development](skills/spec-driven-development/SKILL.md) | Write a PRD covering objectives, commands, structure, code style, testing, and boundaries before any code | Starting a new project, feature, or significant change |
+| [jira-spec-driven-development](skills/jira-spec-driven-development/SKILL.md) | Jira-grounded spec workflow with mandatory Jira MCP validation, story context loading, and related-ticket context | Defining work directly from Jira tickets or stories |
 
 
 ### Plan - Break it down
@@ -174,6 +165,7 @@ These additional skills mirror the core `/spec`, `/plan`, and `/ship` flows whil
 | Skill                                                                      | What It Does                                                                                  | Use When                                     |
 | -------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------- | -------------------------------------------- |
 | [planning-and-task-breakdown](skills/planning-and-task-breakdown/SKILL.md) | Decompose specs into small, verifiable tasks with acceptance criteria and dependency ordering | You have a spec and need implementable units |
+| [jira-planning-and-task-breakdown](skills/jira-planning-and-task-breakdown/SKILL.md) | Story-scoped planning workflow that writes plan artifacts under `jira-spec/{story-id}/` | Planning implementation tasks for a Jira-scoped spec |
 
 
 ### Build - Write the code
@@ -219,6 +211,7 @@ These additional skills mirror the core `/spec`, `/plan`, and `/ship` flows whil
 | [deprecation-and-migration](skills/deprecation-and-migration/SKILL.md)     | Code-as-liability mindset, compulsory vs advisory deprecation, migration patterns, zombie code removal | Removing old systems, migrating users, or sunsetting features       |
 | [documentation-and-adrs](skills/documentation-and-adrs/SKILL.md)           | Architecture Decision Records, API docs, inline documentation standards - document the *why*           | Making architectural decisions, changing APIs, or shipping features |
 | [shipping-and-launch](skills/shipping-and-launch/SKILL.md)                 | Pre-launch checklists, feature flag lifecycle, staged rollouts, rollback procedures, monitoring setup  | Preparing to deploy to production                                   |
+| [jira-shipping-and-launch](skills/jira-shipping-and-launch/SKILL.md)       | Shipping workflow with mandatory Jira ticket and task comment updates during launch | Releasing features where Jira ticket updates are required as part of ship phase |
 
 
 ---
@@ -287,10 +280,13 @@ Every skill follows a consistent anatomy:
 
 ```
 agent-skills/
-├── skills/                            #   Core skills (SKILL.md per directory)
+├── skills/                            #   25 skills (SKILL.md per directory)
+│   ├── brownfield-discovery/          #   Discover
 │   ├── idea-refine/                   #   Define
 │   ├── spec-driven-development/       #   Define
+│   ├── jira-spec-driven-development/  #   Define (Jira)
 │   ├── planning-and-task-breakdown/   #   Plan
+│   ├── jira-planning-and-task-breakdown/ # Plan (Jira)
 │   ├── incremental-implementation/    #   Build
 │   ├── context-engineering/           #   Build
 │   ├── source-driven-development/     #   Build
@@ -304,10 +300,11 @@ agent-skills/
 │   ├── security-and-hardening/        #   Review
 │   ├── performance-optimization/      #   Review
 │   ├── git-workflow-and-versioning/   #   Ship
-│   ├── ci-cd-and-automation/          #   Ship
 │   ├── deprecation-and-migration/     #   Ship
 │   ├── documentation-and-adrs/        #   Ship
 │   ├── shipping-and-launch/           #   Ship
+│   ├── jira-shipping-and-launch/      #   Ship (Jira)
+│   ├── quick-task-execution/          #   Ad-hoc
 │   └── using-agent-skills/            #   Meta: how to use this pack
 ├── agents/                            # 3 specialist personas
 ├── references/                        # 4 supplementary checklists
