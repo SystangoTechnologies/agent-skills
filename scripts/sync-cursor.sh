@@ -119,7 +119,7 @@ link_command_aliases() {
   #   spec.md -> sys-spec.md
   local src="$1" dst="$2"
   local prefix="$COMMAND_ALIAS_PREFIX"
-  local entry name stem alias target current
+  local entry name stem alias current
 
   [[ -n "$prefix" ]] || return 0
   [[ -d "$src" ]] || return 0
@@ -129,11 +129,12 @@ link_command_aliases() {
   for entry in "$src"/*.md; do
     name="$(basename "$entry")"
     stem="${name%.md}"
-    alias="$dst/${prefix}${stem}.md"
-
-    # Avoid creating "sys-sys-foo" if a command is already prefixed.
+    # If the source file is already prefixed (e.g. sys-jira-spec.md),
+    # link it as-is. Otherwise create the prefixed alias.
     if [[ "$stem" == "$prefix"* ]]; then
-      continue
+      alias="$dst/$name"
+    else
+      alias="$dst/${prefix}${stem}.md"
     fi
 
     if [[ -L "$alias" ]]; then
